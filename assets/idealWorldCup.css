@@ -1,0 +1,103 @@
+@charset "utf-8";
+
+.iwc-container{
+    background-color: #99999999;
+}
+.iwc-contents{
+    /* display: none; */
+    border:1px solid red;
+
+}
+.iwc-contents .iwc-items{
+    border:1px solid green;
+}
+.iwc-stage{
+    /* display: none; */
+}
+.iwc-stage{
+    border:1px solid blue;
+}
+
+.iwc-container[data-stage="ready"] .iwc-stage-ready,
+.iwc-container[data-stage="round"] .iwc-stage-round,
+.iwc-container[data-stage="loading"] .iwc-stage-loading,
+.iwc-container[data-stage="vs"] .iwc-stage-vs,
+.iwc-container[data-stage="result"] .iwc-stage-result
+{
+    display: block
+}
+
+
+
+
+.iwc-stage-round{
+    text-align: center;
+}
+.iwc-stage-round-round::before{
+    font-size: 40px;;
+    content: attr(data-round)"강전";
+}
+.iwc-stage-round-round[data-round="2"]::before{
+    content: "결승전";
+}
+.iwc-stage-round-round[data-round="4"]::before{
+    content: "준결승";
+}
+
+
+
+
+.iwc-stage-vs-items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.iwc-stage-vs-item{
+    flex:1 0 auto;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+.iwc-contents .iwc-items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+.iwc-contents .iwc-items .iwc-item{
+    flex:0 0 auto;
+    margin:0;
+}
+
+
+
+
+
+
+.iwc-item{
+    width:150px;
+    /* aspect-ratio: 3/4; */
+    margin:0 auto;
+}
+.iwc-item-content{
+    /* width:clamp(150px,100%,40vw); */
+    width:150px;
+    aspect-ratio: 3/4;
+    border:2px solid #000;
+    border-radius: 10px;
+    text-align: center;
+    margin:0 auto;
+}
