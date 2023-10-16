@@ -50,12 +50,12 @@
 <body>
 	<div class="container">
         <h1>이상형 월드컵</h1>
-        <div class="iwc-container" data-stage="ready" data-round="xx" data-match="yy" data-vs="off" data-vs-select="0">
+        <div class="iwc-container" data-stage="ready" data-round="xx" data-match="yy" data-vs="off" data-vs-select="0" data-motion="off" >
             <div class="iwc-stage iwc-stage-ready">
                 <div class="iwc-stage-ready-content">
                     <div>READY</div>
                     <div>
-                        <button type="button" onclick="iwc.start()">START</button>
+                        <button type="button" onclick="iwc.reset();;iwc.itemsReadyShuffle();iwc.start()">START</button>
                     </div>
                 </div>
                 
@@ -77,6 +77,9 @@
                 <div class="iwc-stage-result-wrap">
                     <div>우승!</div>
                     <div class="iwc-stage-result-item"></div>
+                    <div>
+                        <button type="button" onclick="iwc.reset();iwc.ready()">다시하기</button>
+                    </div>
                 </div>
             </div>
             <div class="iwc-contents">
@@ -109,6 +112,7 @@
             <button class="btn btn-info" onclick="iwc.start()">start</button>
             <button class="btn btn-info" onclick="iwc.end()">end</button>
             <button class="btn btn-info" onclick="iwc.result()">result</button>
+            <button class="btn btn-info" onclick="iwc.reset()">reset</button>
 
             <h3>stage</h3>
             <button class="btn btn-info" onclick="iwc.stage('ready')">ready</button>
