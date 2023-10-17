@@ -167,8 +167,11 @@
     pointer-events: none !important;
     filter: brightness(0.5);
 }
-.iwc-stage-vs-item:hover .iwc-item{
-    filter: brightness(1.2);
+
+@media (hover: hover){
+    .iwc-stage-vs-item:hover .iwc-item{
+        filter: brightness(1.2);
+    }
 }
 
 
@@ -239,9 +242,10 @@
     filter:opacity(0)
 }
 .iwc-stage-vs-items .iwc-stage-vs-items-text{
-    font-size: 30px;
+    font-size: clamp(10px,5vw,100px);
     font-weight: bold;
     margin:5px;
+    color: rgb(136, 34, 34);
 }
 .iwc-container[data-motion="on"] .iwc-stage-vs-items  .iwc-item-content{
     filter:opacity(1)
@@ -276,8 +280,9 @@
 
 .iwc-container[data-unearned="on"]  .iwc-stage-vs-item-2::before{
     content: "부전승";
-    text-decoration: line-through;
-    font-size: 40px;
+    /* text-decoration: line-through; */
+    font-size: clamp(10px,8vw,60px);
+
     color: #999;
 }
 
