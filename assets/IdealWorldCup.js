@@ -97,7 +97,7 @@ class IdealWorldCup{
         
         if(items.length==0){}
         else if(items.length==1){
-            console.log('부전승');
+            // console.log('부전승');
             if(this.container.dataset.vs == 'on'){
                 console.log('이미 vs-on 상태');
                 return false;
@@ -106,7 +106,12 @@ class IdealWorldCup{
             this.container.dataset.unearned = "on"; 
             this.container.querySelector('.iwc-stage-vs-item-1').appendChild(items[0])
             // this.container.querySelector('.iwc-stage-vs-item-2').appendChild(items[1])
-            this.motion(100);
+            this.motion(100,()=>{
+                // setTimeout(() => {
+                //     this.vsSelect(1) // 부전승 자동 선택
+                // }, 1200);
+            });
+
         }
         else{
             if(this.container.dataset.vs == 'on'){
@@ -128,7 +133,7 @@ class IdealWorldCup{
         this.container.dataset.vsSelect = n;
         
         this.motion(1000,()=>{
-            this.vsSelectMove();
+            this.vsSelectAfter();
             const len = this.vsNext();
             this.vsCheck(len);
         });
@@ -137,7 +142,7 @@ class IdealWorldCup{
     vsHistory(round,item_1,item_2,item_sel){
         this.history.push([round,item_1,item_2,item_sel]);
     }
-    vsSelectMove(){
+    vsSelectAfter(){
         const n = this.container.dataset.vsSelect
         const item_1 = this.container.querySelector('.iwc-stage-vs-item-1 .iwc-item');
         const item_2 = this.container.querySelector('.iwc-stage-vs-item-2 .iwc-item');
@@ -174,8 +179,9 @@ class IdealWorldCup{
                 
             }else{
                 this.result();
+                this.stage('result');
                 this.motion(500,()=>{
-                    this.stage('result');
+                    
                 })
             }
         }
