@@ -299,3 +299,7 @@
     filter:opacity(1);
     transform: scale(1);
 }
+.iwc-stage-result-item{
+    width: 100%;
+    max-width: 50vmin
+}

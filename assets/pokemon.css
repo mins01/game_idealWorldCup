@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+.iwc-pokemon.iwc-container{
+    background-color: #fff;
+}
+.iwc-pokemon .iwc-stage{
+    border-width: 0;
+}
+
+.iwc-pokemon .iwc-content-box{
+    min-height: 50vh;
+}
+
+
+.iwc-pokemon .iwc-item{
+    width:100%;
+}
+
+.iwc-pokemon .iwc-item-content{
+    width:100%;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+

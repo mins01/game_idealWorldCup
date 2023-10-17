@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko" >
 <head>
-	<title>Ideal World Cup. 이상형 월드컵</title>
+	<title>Ideal World Cup. 이상형 월드컵 - 포켓몬</title>
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Script-Type" content="text/javascript">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -27,16 +27,17 @@
 	
 	<!-- meta og -->
 	
-	<meta property="og:title" content="Ideal World Cup. 이상형 월드컵">
-	<meta property="og:description" content="Ideal World Cup. 이상형 월드컵">
+	<meta property="og:title" content="Ideal World Cup. 이상형 월드컵 - 포켓몬">
+	<meta property="og:description" content="Ideal World Cup. 이상형 월드컵 - 포켓몬">
 	<meta name="og:image" content="http://www.mins01.com/img/logo.gif">
 	<meta property="og:image:width" content="190">
 	<meta property="og:image:height" content="70" />
-	<meta property="og:site_name" content="Ideal World Cup. 이상형 월드컵" />
+	<meta property="og:site_name" content="Ideal World Cup. 이상형 월드컵 - 포켓몬" />
 	<meta property="og:type" content="website">
 	
 	<!-- //meta og -->
     <link rel="stylesheet" href="assets/idealWorldCup.css">
+    <link rel="stylesheet" href="assets/pokemon.css">
     <script src="assets/IdealWorldCup.js"></script>
 	
     <script>
@@ -45,15 +46,38 @@
             iwc = new IdealWorldCup(document.querySelector('.iwc-container'))
         })
     </script>
-	
+	<script>
+        //https://data1.pokemonkorea.co.kr/newdata/pokedex/mid/101001.png
+        window.addEventListener('load',(event)=>{
+            const start = 1;
+            const end = 1010;
+            let nums = Array(end - start + 1).fill().map((_, idx) => start + idx)
+            nums.sort(() => Math.random() - 0.5);
+            nums = nums.slice(0,16)
+            console.log(nums);
+            const iwc_items_ready = document.querySelector('.iwc-items-ready');
+            iwc_items_ready.innerHTML = '';
+            nums.forEach((num)=>{
+                const filled_num = num.toString().padStart(4,'0');
+                const img_url = `https://data1.pokemonkorea.co.kr/newdata/pokedex/mid/${filled_num}01.png`
+                console.log(img_url);
+
+                const div1 = document.createElement('div');
+                div1.classList.add('iwc-item')
+                div1.dataset.idx = num;
+                const div2 = document.createElement('div');
+                div2.classList.add('iwc-item-content')
+                div1.appendChild(div2);
+                div2.style.backgroundImage=`url(${img_url})`;
+                iwc_items_ready.append(div1)
+            })
+        })
+    </script>
 </head>
 <body>
 	<div class="container">
-        <h1>이상형 월드컵</h1>
-        <div class="py-3">
-            <a class="btn btn-info" href="pokemon.html">🔗 포켓몬 버전</a>
-        </div>
-        <div class="iwc-container" data-stage="ready" data-round="xx" data-match="yy" data-vs="off" data-vs-select="0" data-motion="off" data-debug="0" >
+        <h1>이상형 월드컵 - 포켓몬</h1>
+        <div class="iwc-container iwc-pokemon" data-stage="ready" data-round="xx" data-match="yy" data-vs="off" data-vs-select="0" data-motion="off" data-debug="0" >
             <div class="iwc-stage iwc-stage-ready">
                 <div class="iwc-stage-ready-content iwc-content-box">
                     <div>READY</div>
@@ -90,15 +114,8 @@
             <div class="iwc-contents">
                 <h4>ready</h4>
                 <div class="iwc-items iwc-items-ready">
-                    <div class="iwc-item" data-idx="1"><div class="iwc-item-content">1</div></div>
-                    <div class="iwc-item" data-idx="2"><div class="iwc-item-content">2</div></div>
-                    <div class="iwc-item" data-idx="3"><div class="iwc-item-content">3</div></div>
-                    <!-- <div class="iwc-item" data-idx="4"><div class="iwc-item-content">4</div></div>
-                        <div class="iwc-item" data-idx="5"><div class="iwc-item-content">5</div></div>
-                        <div class="iwc-item" data-idx="6"><div class="iwc-item-content">6</div></div>
-                        <div class="iwc-item" data-idx="7"><div class="iwc-item-content">7</div></div> -->
-                        <!-- <div class="iwc-item" data-idx="8"><div class="iwc-item-content">8</div></div> -->
-                        <!-- <div class="iwc-item" data-idx="9" data-disabled><div class="iwc-item-content">기권</div></div> -->
+                    <!-- <div class="iwc-item" data-idx="1"><div class="iwc-item-content">1</div></div> -->
+                    <!-- <div class="iwc-item" data-idx="9" data-disabled><div class="iwc-item-content">기권</div></div> -->
                 </div>
                 <h4>win</h4>
                 <div class="iwc-items iwc-items-win">
@@ -109,10 +126,14 @@
 
                 </div>
             </div>
-
-
         </div>
         <div>
+            <div>* 이미지 출처 : https://pokemonkorea.co.kr/pokedex</div>
+            <div>* 포켓몬 이미지의 저작권은 '(주)포켓몬코리아'에 있습니다.  </div>
+            <div>* 종종 없는 이미지가 없는 포켓몬이 나옴. 코드 번호에 차이이가 있어서... </div>
+            <div>* 16개의 랜덤 포켓몬으로 16강전부터 진행합니다.</div>
+        </div>
+        <!-- <div>
             <h2>debug</h2>
             <h3>start</h3>
             <button class="btn btn-info" onclick="iwc.start()">start</button>
@@ -132,9 +153,7 @@
             <button class="btn btn-info" onclick="iwc.itemsReadyShuffle()">itemsReadyShuffle</button>
             <button class="btn btn-info" onclick="iwc.debug('1')">debug ON</button>
             <button class="btn btn-info" onclick="iwc.debug('0')">debug OFF</button>
-
-            
-        </div>
+        </div> -->
 	</div>
 </body>
 </html>
