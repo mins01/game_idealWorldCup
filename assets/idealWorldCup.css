@@ -26,7 +26,6 @@
 
 .iwc-contents{
     display: none;
-    border:1px solid red;
 }
 .iwc-contents .iwc-items{
     border:1px solid green;
@@ -42,7 +41,6 @@
 
 
 .iwc-stage{
-    border:1px solid blue;
     min-height: 200px;
 }
 
@@ -247,10 +245,10 @@
     margin:5px;
     color: rgb(136, 34, 34);
 }
-.iwc-container[data-motion="on"] .iwc-stage-vs-items  .iwc-item-content{
+.iwc-container[data-show="on"] .iwc-stage-vs-items  .iwc-item-content{
     filter:opacity(1)
 }
-.iwc-container[data-motion="on"]  .iwc-stage-vs-item-2 .iwc-item-content{
+.iwc-container[data-show="on"]  .iwc-stage-vs-item-2 .iwc-item-content{
     transition-delay: 0.2s;
 }
 
@@ -275,6 +273,19 @@
 }
 
 
+/* 스테이지 모션 */
+.iwc-container .iwc-stage{
+    transition: all 0.2s ease;
+}
+.iwc-container[data-show="off"] .iwc-stage{
+    opacity: 0;
+}
+.iwc-container[data-show="on"] .iwc-stage{
+    opacity: 1;
+}
+
+
+
 
 /* 부전승용 */
 
@@ -295,7 +306,7 @@
     filter:opacity(0);
     transform: scale(0.5);
 }
-.iwc-container[data-motion="on"] .iwc-stage-result  .iwc-item-content{
+.iwc-container[data-show="on"] .iwc-stage-result  .iwc-item-content{
     filter:opacity(1);
     transform: scale(1);
 }

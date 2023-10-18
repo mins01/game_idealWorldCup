@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * step : ready -> start -> off/on
+ * method step : xxxxStart() -> showOff()-> xxxxReady() -> showOn()
+ */
 class IdealWorldCup{
     container = null;
     history = null;
@@ -10,18 +13,52 @@ class IdealWorldCup{
 
     ready(){
         console.log('ready');
-        this.stage('ready');
+
+        this.showOff(100,()=>{
+            this.showOn(500,()=>{
+                this.stage('ready');
+            });
+        });
+        
     }
 
     start(){
         console.log('start');
-        this.roundNext();
-        this.stage('round');
-        this.motion(1000,()=>{
-            this.vsNext()
-            this.stage('vs');
-        })
+        this.itemsReadyShuffle();
+        this.roundStart();
+    }
 
+    roundStart(){
+        this.showOff();
+        this.stage('round');
+        this.roundReady();
+        this.showOn(500,()=>{
+            this.delay(2000,()=>{
+                this.vsStart()
+            });
+        });
+        
+        // this.showOn(500,()=>{
+            
+        //     this.showOff(1000,()=>{
+                
+        //     });
+        // });
+    }
+
+    vsStart(){
+        this.showOff();
+        this.delay(500,()=>{
+            this.stage('vs');
+            const vsLen = this.vsReady()
+            this.vsOn(vsLen);
+            // this.showOn(500);
+        })
+        
+    }
+    historySave(round,item_sel,item_1,item_2){
+        this.history.push([round,item_sel,item_1,item_2]);
+        console.log('history',this.history);
     }
     
     end(){
@@ -33,12 +70,24 @@ class IdealWorldCup{
     }
 
     result(){
+        this.resultStart();
+    }
+    resultStart(){
+        this.showOff()
+        this.delay(500,()=>{
+            this.stage('result');
+            this.resultReady();
+            this.showOn(500,()=>{
+            });
+        })
+        
+    }
+    resultReady(){
         console.log('result');
         const item = document.querySelector('.iwc-items-ready .iwc-item')
+        if(!item) return;
         this.container.querySelector('.iwc-stage-result-item').appendChild(item);
         console.log('history',this.history);
-        this.motion(100);
-
     }
 
 
@@ -74,12 +123,12 @@ class IdealWorldCup{
             el.dataset.round = round;
         });
     }
-    roundNext(){
+    roundReady(){
         this.itemsReady()
         const len = this.container.querySelectorAll('.iwc-items-ready .iwc-item').length;
-        console.log(len,'개');
         const round = Math.ceil(len/2)*2;
         this.round(round);
+        console.log(`[라운드 ${round}] 남은 아이템 수 ${len}개`);
         return len;
     }
 
@@ -90,13 +139,13 @@ class IdealWorldCup{
     //         el.dataset.vs = vs;
     //     });
     // }
-    vsNext(){
+    vsReady(){
         const items = this.container.querySelectorAll('.iwc-items-ready .iwc-item');
         const len = items.length;
         
         
-        if(items.length==0){}
-        else if(items.length==1){
+        if(len==0){}
+        else if(len==1){
             // console.log('부전승');
             if(this.container.dataset.vs == 'on'){
                 console.log('이미 vs-on 상태');
@@ -106,11 +155,12 @@ class IdealWorldCup{
             this.container.dataset.unearned = "on"; 
             this.container.querySelector('.iwc-stage-vs-item-1').appendChild(items[0])
             // this.container.querySelector('.iwc-stage-vs-item-2').appendChild(items[1])
-            this.motion(100,()=>{
-                // setTimeout(() => {
-                //     this.vsSelect(1) // 부전승 자동 선택
-                // }, 1200);
-            });
+            // this.showOff()
+            // this.show(100,()=>{
+            //     setTimeout(() => {
+            //         this.vsSelect(1) // 부전승 자동 선택
+            //     }, 1200);
+            // });
 
         }
         else{
@@ -121,7 +171,7 @@ class IdealWorldCup{
             this.container.dataset.vs = "on"; 
             this.container.querySelector('.iwc-stage-vs-item-1').appendChild(items[0])
             this.container.querySelector('.iwc-stage-vs-item-2').appendChild(items[1])
-            this.motion(100);
+            // this.show(100);
         }
         return len;
     }
@@ -132,15 +182,13 @@ class IdealWorldCup{
         }
         this.container.dataset.vsSelect = n;
         
-        this.motion(1000,()=>{
-            this.vsSelectAfter();
-            const len = this.vsNext();
-            this.vsCheck(len);
+        this.showOff(1000,()=>{
+            this.delay(500,()=>{
+                this.vsSelectAfter();
+                this.vsStart()
+            });
         });
         
-    }
-    vsHistory(round,item_1,item_2,item_sel){
-        this.history.push([round,item_1,item_2,item_sel]);
     }
     vsSelectAfter(){
         const n = this.container.dataset.vsSelect
@@ -152,38 +200,37 @@ class IdealWorldCup{
         
         if(!item_2){ //부전승
             this.container.querySelector('.iwc-items-win').appendChild(item_1)
-            this.vsHistory(this.container.dataset.round,item_1.dataset.idx,'-1',item_1.dataset.idx)
+            this.historySave(this.container.dataset.round,item_1.dataset.idx,item_1.dataset.idx,'-1')
         }else if(n==1){
             this.container.querySelector('.iwc-items-win').appendChild(item_1)
             this.container.querySelector('.iwc-items-lose').appendChild(item_2)
-            this.vsHistory(this.container.dataset.round,item_1.dataset.idx,item_2.dataset.idx,item_1.dataset.idx)
+            this.historySave(this.container.dataset.round,item_1.dataset.idx,item_1.dataset.idx,item_2.dataset.idx)
         }else if(n==2){
             this.container.querySelector('.iwc-items-win').appendChild(item_2)
             this.container.querySelector('.iwc-items-lose').appendChild(item_1)
-            this.vsHistory(this.container.dataset.round,item_1.dataset.idx,item_2.dataset.idx,item_2.dataset.idx)
+            this.historySave(this.container.dataset.round,item_2.dataset.idx,item_1.dataset.idx,item_2.dataset.idx)
         }
         
     }
-    vsCheck(len){
+    vsOn(len){
         if(len===0){
-            this.stage('loading');
-            const remain = this.roundNext();
-            if(remain > 1){
-                this.motion(500,()=>{
-                    this.stage('round');
-                    this.motion(1000,()=>{
-                        this.vsNext()
-                        this.stage('vs');
-                    })
+            console.log('라운드 종료');
+            this.delay(300,()=>{
+                this.stage('loading');
+                this.showOn();
+                const roundRemain = this.roundReady();
+                this.delay(1000,()=>{
+                    if(roundRemain > 1){
+                        this.roundStart();
+                    }else{
+                        this.resultStart();
+                    }
                 })
                 
-            }else{
-                this.result();
-                this.stage('result');
-                this.motion(500,()=>{
-                    
-                })
-            }
+            })
+            
+        }else{
+            this.showOn();
         }
     }
     itemsReady(){
@@ -194,6 +241,7 @@ class IdealWorldCup{
         })
     }
     itemsReadyShuffle(){
+        console.log('itemsReadyShuffle');
         let items = [...document.querySelectorAll('.iwc-items-ready .iwc-item')];
         items.sort((a,b)=>{
             return Math.random() - 0.5
@@ -205,15 +253,35 @@ class IdealWorldCup{
     }
 
 
+    showOff(delay,cb){
+        if(!delay){
+            this.container.dataset.show = "off"; 
+            if(cb){ cb(); }
+        }else{
+            setTimeout(() => {
+                this.container.dataset.show = "off"; 
+                if(cb){ cb(); }
+            }, delay);
+        }
+    }
+    showOn(delay,cb){
+        if(!delay){
+            this.container.dataset.show = "on"; 
+            if(cb){ cb(); }
+        }else{
+            setTimeout(() => {
+                this.container.dataset.show = "on"; 
+                if(cb){ cb(); }
+            }, delay);
+        }
+    }
+    delay(delay,cb){
+        setTimeout(() => { if(cb){ cb(); } }, delay);
+    }
 
-    motion(delay,cb){
-        this.container.dataset.motion = "off";
-        setTimeout(() => {
-            this.container.dataset.motion = "on"; 
-            if(cb){
-                cb();
-            }
-        }, delay);
+    show(delay,cb){
+        this.showOff();
+        this.showOn(delay,cb);
     }
 
 

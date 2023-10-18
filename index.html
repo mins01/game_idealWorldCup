@@ -43,9 +43,17 @@
         let iwc = null
         window.addEventListener('load',(event)=>{
             iwc = new IdealWorldCup(document.querySelector('.iwc-container'))
+            iwc.ready();
         })
     </script>
-	
+	<style>
+        .iwc-stage{
+            outline:1px solid blue;
+        }
+        .iwc-contents{
+            outline:1px solid red;
+        }
+    </style>
 </head>
 <body>
 	<div class="container">
@@ -53,7 +61,7 @@
         <div class="py-3">
             <a class="btn btn-info" href="pokemon.html">🔗 포켓몬 버전</a>
         </div>
-        <div class="iwc-container" data-stage="ready" data-round="xx" data-match="yy" data-vs="off" data-vs-select="0" data-motion="off" data-debug="0" >
+        <div class="iwc-container" data-stage="ready" data-round="xx" data-vs="off" data-vs-select="0" data-show="off" data-debug="0" >
             <div class="iwc-stage iwc-stage-ready">
                 <div class="iwc-stage-ready-content iwc-content-box">
                     <div>READY</div>
@@ -71,9 +79,9 @@
             </div>
             <div class="iwc-stage iwc-stage-vs">
                 <div class="iwc-stage-vs-items iwc-content-box">
-                    <div tabindex="0" class="iwc-stage-vs-item iwc-stage-vs-item-1" onclick="iwc.vsSelect(1);setTimeout(()=>{blur()},1000);"></div>
+                    <div tabindex="0" class="iwc-stage-vs-item iwc-stage-vs-item-1" onclick="iwc.vsSelect(1);"></div>
                     <div class="iwc-stage-vs-items-text">VS</div>
-                    <div tabindex="0" class="iwc-stage-vs-item iwc-stage-vs-item-2" onclick="iwc.vsSelect(2);setTimeout(()=>{blur()},1000);"></div>
+                    <div tabindex="0" class="iwc-stage-vs-item iwc-stage-vs-item-2" onclick="iwc.vsSelect(2);"></div>
                 </div>
             </div>
             <div class="iwc-stage iwc-stage-result">
@@ -83,7 +91,7 @@
 
                     </div>
                     <div>
-                        <button class="iwc-button" type="button" onclick="iwc.reset();iwc.ready()">다시하기</button>
+                        <button class="iwc-button" type="button" onclick="iwc.ready()">다시하기</button>
                     </div>
                 </div>
             </div>
@@ -117,8 +125,8 @@
             <h3>start</h3>
             <button class="btn btn-info" onclick="iwc.start()">start</button>
             <button class="btn btn-info" onclick="iwc.end()">end</button>
-            <button class="btn btn-info" onclick="iwc.result()">result</button>
             <button class="btn btn-info" onclick="iwc.reset()">reset</button>
+            <button class="btn btn-info" onclick="iwc.result()">result</button>
 
             <h3>stage</h3>
             <button class="btn btn-info" onclick="iwc.stage('ready')">ready</button>
