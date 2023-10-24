@@ -3,6 +3,7 @@
 .iwc-container{
     background-color: #99999999;
     padding: 20px;
+    position: relative;
 }
 
 .iwc-container button{
@@ -34,10 +35,34 @@
     display: none;
 }
 
-
-.iwc-container[data-debug="1"] :is(.iwc-contents,.iwc-stage){
-    display: block;
+/* 로딩 레이어 */
+.iwc-container .iwc-layer-loading{
+    position: absolute;
+    top:0;left:0;right:0;bottom:0;
+    z-index: 11;
+    background-color: #999;
+    /* display: none; */
+    
 }
+.iwc-container[data-loading="off"] .iwc-layer-loading{
+    /* display: none; */
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+.iwc-container[data-loading="on"] .iwc-layer-loading{
+    /* display: block; */
+    opacity: 1;
+}
+
+
+.iwc-container[data-debug="1"] :is(.iwc-contents,.iwc-stage,.iwc-layer-loading){
+    display: block;
+    position: static;
+}
+
+
 
 
 .iwc-stage{
@@ -50,10 +75,10 @@
 .iwc-container[data-stage="vs"] .iwc-stage-vs,
 .iwc-container[data-stage="unearned"] .iwc-stage-unearned,
 .iwc-container[data-stage="result"] .iwc-stage-result
-
 {
     display: block
 }
+
 
 
 
@@ -112,7 +137,18 @@
     font-weight: bold;
 }
 
+.iwc-layer-loading-text{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 
+    font-size: 40px;
+    font-weight: bold;
+    height: 100%;
+}
 
 
 .iwc-stage-result-content{
@@ -236,8 +272,8 @@
 
 /* 모션처리 */
 .iwc-stage-vs-items .iwc-item-content{
-    transition: all 0.5s ease;
-    filter:opacity(0)
+    /* transition: all 0.5s ease;
+    filter:opacity(0) */
 }
 .iwc-stage-vs-items .iwc-stage-vs-items-text{
     font-size: clamp(10px,5vw,100px);
@@ -245,12 +281,21 @@
     margin:5px;
     color: rgb(136, 34, 34);
 }
-.iwc-container[data-show="on"] .iwc-stage-vs-items  .iwc-item-content{
+.iwc-container .iwc-stage-vs-items{
+    transition: all 0.5s ease;
+}
+.iwc-container[data-vs="on"] .iwc-stage-vs-items{
+    filter:opacity(1)
+}
+.iwc-container[data-vs="off"] .iwc-stage-vs-items{
+    filter:opacity(0)
+}
+/* .iwc-container[data-show="on"] .iwc-stage-vs-items  .iwc-item-content{
     filter:opacity(1)
 }
 .iwc-container[data-show="on"]  .iwc-stage-vs-item-2 .iwc-item-content{
     transition-delay: 0.2s;
-}
+} */
 
 .iwc-container[data-vs-select="1"] .iwc-stage-vs-item-1 .iwc-item-content, 
 .iwc-container[data-vs-select="2"] .iwc-stage-vs-item-2 .iwc-item-content{
@@ -274,7 +319,7 @@
 
 
 /* 스테이지 모션 */
-.iwc-container .iwc-stage{
+/* .iwc-container .iwc-stage{
     transition: all 0.2s ease;
 }
 .iwc-container[data-show="off"] .iwc-stage{
@@ -282,7 +327,7 @@
 }
 .iwc-container[data-show="on"] .iwc-stage{
     opacity: 1;
-}
+} */
 
 
 
@@ -306,7 +351,7 @@
     filter:opacity(0);
     transform: scale(0.5);
 }
-.iwc-container[data-show="on"] .iwc-stage-result  .iwc-item-content{
+.iwc-container[data-loading="off"] .iwc-stage-result  .iwc-item-content{
     filter:opacity(1);
     transform: scale(1);
 }
