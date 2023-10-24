@@ -33,6 +33,7 @@ class IdealWorldCup{
         });
     }
     gameStart(){
+        this.reset();
         this.itemsReadyShuffle();
         // this.roundStart();
         this.roundReady();
@@ -159,14 +160,17 @@ class IdealWorldCup{
     }
     vsSelect(n){
         console.log('vsSelect');
+        this.vsOff();
         if(this.container.dataset.vsSelect != "0"){
             console.log('이미 선택함');
             return false;
         }
         this.container.dataset.vsSelect = n;
         
-        this.vsOff();
-        this.vsSelectEnd();
+        this.vsOn(500,()=>{
+            this.vsSelectEnd();    
+        });
+        
     }
     vsSelectEnd(){
         console.log('vsSelectEnd');
@@ -189,6 +193,7 @@ class IdealWorldCup{
             this.container.querySelector('.iwc-items-lose').appendChild(item_1)
             this.historySave(this.container.dataset.round,item_2.dataset.idx,item_1.dataset.idx,item_2.dataset.idx)
         }
+
         this.delay(500,()=>{
             this.vsReady()
         });

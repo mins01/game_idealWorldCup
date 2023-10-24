@@ -79,21 +79,22 @@
 	<div class="container">
         <h1>이상형 월드컵 - 포켓몬</h1>
 
-        <div class="iwc-container iwc-pokemon" data-stage="ready" data-round="xx" data-vs="off" data-vs-select="0" data-show="off" data-debug="0" >
+
+        <div class="iwc-container iwc-pokemon" data-stage="ready" data-round="xx" data-vs="off" data-vs-select="0" data-show="off" data-debug="0" data-loading="off">
+            <div class="iwc-layer iwc-layer-loading">
+                <div class="iwc-layer-loading-text iwc-content-box">LOADING</div>
+            </div>
             <div class="iwc-stage iwc-stage-ready">
                 <div class="iwc-stage-ready-content iwc-content-box">
                     <div>READY</div>
                     <div>
-                        <button class="iwc-button" type="button" onclick="iwc.reset();;iwc.itemsReadyShuffle();iwc.start()">START</button>
+                        <button class="iwc-button" type="button" onclick="iwc.start()">START</button>
                     </div>
                 </div>
                 
             </div>
             <div class="iwc-stage iwc-stage-round">
                 <div class="iwc-stage-round-text iwc-content-box" data-round="xx"></div>
-            </div>
-            <div class="iwc-stage iwc-stage-loading">
-                <div class="iwc-stage-loading-text iwc-content-box">LOADING</div>
             </div>
             <div class="iwc-stage iwc-stage-vs">
                 <div class="iwc-stage-vs-items iwc-content-box">
@@ -138,37 +139,22 @@
 
 
         </div>
-        <!-- <div>
+        <div>
             <h2>debug</h2>
             <h3>start</h3>
-            <button class="btn btn-info" onclick="iwc.start()">start</button>
-            <button class="btn btn-info" onclick="iwc.end()">end</button>
             <button class="btn btn-info" onclick="iwc.reset()">reset</button>
+            <button class="btn btn-info" onclick="iwc.ready()">ready</button>
+            <button class="btn btn-info" onclick="iwc.start()">start</button>
             <button class="btn btn-info" onclick="iwc.result()">result</button>
+            <button class="btn btn-info" onclick="iwc.end()">end</button>
 
-            <h3>stage</h3>
-            <button class="btn btn-info" onclick="iwc.stage('ready')">ready</button>
-            <button class="btn btn-info" onclick="iwc.stage('loading')">loading</button>
-            <button class="btn btn-info" onclick="iwc.stage('round')">round</button>
-            <button class="btn btn-info" onclick="iwc.stage('vs')">vs</button>
-            <button class="btn btn-info" onclick="iwc.stage('result')">result</button>
-            <h3>vs</h3>
-            <button class="btn btn-info" onclick="iwc.vsNext()">vsNext</button>
             <h3>etc</h3>
             <button class="btn btn-info" onclick="iwc.itemsReadyShuffle()">itemsReadyShuffle</button>
             <button class="btn btn-info" onclick="iwc.debug('1')">debug ON</button>
             <button class="btn btn-info" onclick="iwc.debug('0')">debug OFF</button>
 
             
-        </div> -->
-
-        <div>
-            <div>* 이미지 출처 : https://pokemonkorea.co.kr/pokedex</div>
-            <div>* 포켓몬 이미지의 저작권은 '(주)포켓몬코리아'에 있습니다.  </div>
-            <div>* 종종 없는 이미지가 없는 포켓몬이 나옴. 코드 번호에 차이이가 있어서... </div>
-            <div>* 16개의 랜덤 포켓몬으로 16강전부터 진행합니다.</div>
         </div>
-        
 	</div>
 </body>
 </html>

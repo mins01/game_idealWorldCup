@@ -24,3 +24,8 @@
     background-color: #fff;
 }
 
+
+/* 로딩 레이어 */
+.iwc-pokemon  .iwc-layer-loading{
+    background-color: #eee;
+}

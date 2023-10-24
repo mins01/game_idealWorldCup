@@ -42,7 +42,6 @@
     z-index: 11;
     background-color: #999;
     /* display: none; */
-    
 }
 .iwc-container[data-loading="off"] .iwc-layer-loading{
     /* display: none; */
