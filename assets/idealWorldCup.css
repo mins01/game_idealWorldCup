@@ -329,6 +329,38 @@
 
 
 
+/* 게임 네비 */
+.iwc-container .iwc-stage-vs-navi{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding:10px;
+    margin:0 auto;
+}
+
+
+.iwc-container .iwc-stage-vs-navi-item{
+    border: 2px solid #eee;
+    width:20px; height:20px;
+    border-radius: 10em;
+    background-color: #eee;
+}
+
+.iwc-container .iwc-stage-vs-navi-item.on{
+    border-color: #eee;
+    background-color: #666;
+}
+
+
+
+
+
+
+
 /* 결과 부분 */
 .iwc-stage-result .iwc-item-content{
     transition: all 1s ease;
