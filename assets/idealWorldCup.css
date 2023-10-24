@@ -318,22 +318,7 @@
 }
 
 
-/* 스테이지 모션 */
-/* .iwc-container .iwc-stage{
-    transition: all 0.2s ease;
-}
-.iwc-container[data-show="off"] .iwc-stage{
-    opacity: 0;
-}
-.iwc-container[data-show="on"] .iwc-stage{
-    opacity: 1;
-} */
-
-
-
-
 /* 부전승용 */
-
 .iwc-container[data-unearned="on"]  .iwc-stage-vs-item-2::before{
     content: "부전승";
     /* text-decoration: line-through; */
@@ -345,7 +330,7 @@
 
 
 
-
+/* 결과 부분 */
 .iwc-stage-result .iwc-item-content{
     transition: all 1s ease;
     filter:opacity(0);

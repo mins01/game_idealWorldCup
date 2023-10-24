@@ -9,10 +9,9 @@ gameReady (loadingOn) (loadingOff)
     -> roundReady
     -> roundStart (loadingOff)
         -> vsReady (vsOff)
-        -> vsStart => vsDraw (vsOn)
-        -> vsSelect
-        -> vsEnd
-    -> roundEnd (loadingOn)
+        -> vsStart -> vsDraw (vsOn) -> vsCheck => roundEnd
+        -> vsSelect -> vsSelectEnd => vsReady
+    -> roundEnd (loadingOn) => roundReady, resultReady
     -> resultReady
     -> resultStart (loadingOff)
     -> resultEnd
@@ -107,7 +106,7 @@ class IdealWorldCup{
         if(roundRemain > 1){
             this.roundReady();
         }else{
-            this.resultStart();
+            this.resultReady();
         }
     }
 
@@ -118,27 +117,15 @@ class IdealWorldCup{
         // this.showOff();
         this.vsOff();
         this.stage('vs');
-        const vsLen = this.vsDraw()
-        this.vsCheck(vsLen);
-
+        this.vsStart();
     }
 
     vsStart(){
         console.log('vsStart');
-        // this.showOff(100,()=>{
-        //     // this.stage('vs');
-        //     // const vsLen = this.vsDraw()
-        //     // this.vsCheck(vsLen);
-        //     // this.showOn(500);
-        // });
+        const vsLen = this.vsDraw()
+        this.vsCheck(vsLen);
     }
-    // vs(vs){
-    //     console.log('vs');
-    //     this.container.dataset.vs = vs;
-    //     this.container.querySelectorAll('*[data-vs]').forEach(el => {
-    //         el.dataset.vs = vs;
-    //     });
-    // }
+
     vsDraw(){
         console.log('vsDraw');
         const items = this.container.querySelectorAll('.iwc-items-ready .iwc-item');
@@ -179,13 +166,10 @@ class IdealWorldCup{
         this.container.dataset.vsSelect = n;
         
         this.vsOff();
-        this.vsSelectAfter();
-        this.delay(500,()=>{
-            this.vsReady()
-        });    
+        this.vsSelectEnd();
     }
-    vsSelectAfter(){
-        console.log('vsSelectAfter');
+    vsSelectEnd(){
+        console.log('vsSelectEnd');
         const n = this.container.dataset.vsSelect
         const item_1 = this.container.querySelector('.iwc-stage-vs-item-1 .iwc-item');
         const item_2 = this.container.querySelector('.iwc-stage-vs-item-2 .iwc-item');
@@ -205,28 +189,20 @@ class IdealWorldCup{
             this.container.querySelector('.iwc-items-lose').appendChild(item_1)
             this.historySave(this.container.dataset.round,item_2.dataset.idx,item_1.dataset.idx,item_2.dataset.idx)
         }
-        
+        this.delay(500,()=>{
+            this.vsReady()
+        });
     }
     vsCheck(len){
         console.log('vsCheck');
         if(len===0){
             console.log('라운드 종료');
             this.delay(100,()=>{
-                // this.stage('loading');
-                // this.showOn();
-                // const roundRemain = this.roundRemain();
                 this.roundEnd();
-                // if(roundRemain > 1){
-                //     this.roundReady();
-                // }else{
-                //     this.resultStart();
-                // }
-                // this.loadingOff(1000)
-                
             })
             
         }else{
-            // this.showOn();
+            
         }
     }
 
@@ -251,32 +227,32 @@ class IdealWorldCup{
     }
 
     result(){
-        this.resultStart();
-    }
-    resultStart(){
-        this.loadingOn(10,()=>{
-            this.stage('result');
-            this.resultReady();
-            this.loadingOff(500);
-        });
-
-        // this.showOff()
-        // this.delay(500,()=>{
-        //     this.stage('result');
-        //     this.resultReady();
-        //     this.showOn(500,()=>{
-        //     });
-        // })
-        
+        this.resultReady();
     }
     resultReady(){
+        this.loadingOn();
         console.log('result');
         const item = document.querySelector('.iwc-items-ready .iwc-item')
         if(!item) return;
         this.container.querySelector('.iwc-stage-result-item').appendChild(item);
         console.log('history',this.history);
-    }
 
+        this.stage('result');
+
+        this.delay(500,()=>{
+            this.resultStart();
+        })
+
+    }
+    resultStart(){
+        this.loadingOff();
+        this.delay(500,()=>{
+            this.resultEnd();
+        })
+    }
+    resultEnd(){
+
+    }
 
     reset(){
         console.log('reset');
@@ -289,7 +265,7 @@ class IdealWorldCup{
             iwc_items_ready.appendChild(el);
         })
         this.container.dataset.vsSelect = 0;
-        this.container.dataset.vs = 'off'
+        this.vsOff(); // this.container.dataset.vs = 'off'
         this.container.dataset.unearned = "off"; 
         this.history = [];
     }
