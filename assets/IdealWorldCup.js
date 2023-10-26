@@ -321,7 +321,7 @@ class IdealWorldCup{
         })
     }
     resultEnd(){
-
+        this.gameEnd();
     }
 
     
